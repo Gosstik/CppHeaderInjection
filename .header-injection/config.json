@@ -1,8 +1,0 @@
-{
-  "include_dirs": [
-    "tests/data/include",
-    "tests/data/other_dir/include"
-  ],
-  "project_root": "/home/ownstreamer/Code/Python/CppHeaderInjection",
-  "project_root_dir": "CppHeaderInjection"
-}
