@@ -1,0 +1,55 @@
+### Configuration: https://python-poetry.org/docs/pyproject/#packages
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+#package-mode = false # disables editable install
+name = "cpp_header_injection"
+version = "0.1.0"
+description = "Utility to include code from headers into one file."
+authors = ["Egor Vashkevich <goshikvash@gmail.com>"]
+readme = ["README.md"]
+license = "MIT"
+#homepage = "https://python-poetry.org/"
+repository = "https://github.com/Gosstik/CppHeaderInjection.git"
+#keywords = ["packaging", "poetry"]
+classifiers = [
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+### Using packages disables the package auto-detection feature
+### meaning you have to explicitly specify the “default” package.
+packages = [
+    {include = "cpp_header_injection", from = "src"},
+#    { include = "extra_package" },
+#    { include = "spec_package", from = "lib", to = "target_package", format = "sdist" },
+]
+### Data files. Poetry check for VCS setting first
+#include = [
+#    "CHANGELOG.md", # format defaults to "sdist"
+#    { path = "for_wheel.txt", format = ["sdist", "wheel"] }
+#]
+#exclude = [
+#    "my_package/excluded.py", # format defaults to ["sdist", "wheel"]
+#]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+#optional_package = { version = "^2.9", optional = true }
+#pandas = {version="^2.2.1", extras=["computation", "performance"]}
+
+#[tool.poetry.group.dev.dependencies]
+#fastapi = {version="^0.92.0", extras=["all"]}
+
+### Extra dependencies
+### cli: poetry install --extras "name_1 name_2"
+### cli: poetry install -E name_1 -E name_2
+### cli: poetry install --all-extras
+#[tool.poetry.extras]
+#name_1 = ["extra_package_1"]
+#name_2 = ["extra_package_2"]
+
+[tool.poetry.scripts]
+header_injection = "cpp_header_injection.main_cli:main_cli"
