@@ -5,6 +5,7 @@ from cpp_header_injection.logger import dev_log
 
 
 INCLUDE_REGEX = re.compile(r"\n\s*#[ \t]*include[ \t]*<(?P<include>.*)>.*\n")
+PRAGMA_ONCE_REGEX = re.compile(r"\n\s*#[ \t]*pragma[ \t]* once.*\n")
 LINEFEED_REGEX = re.compile(r"\n")
 DOUBLE_LINEFEED_REGEX = re.compile(r"\n\n")
 INCLUDE_LINE_REGEX = re.compile(r"^\s*#[ \t]*include[ \t]*<(?P<include>.*)>")
@@ -76,7 +77,9 @@ class SourceParser:
         if os.path.isabs(include):
             return include
 
+        project_root = self.conf["project_root"]
         for include_dir in self.conf["include_dirs"]:
+            include_dir = os.path.join(project_root, include_dir)
             include_dir = os.path.dirname(include_dir)
             include_abspath = os.path.join(include_dir, include)
             if os.path.exists(include_abspath):
@@ -99,6 +102,7 @@ class SourceParser:
 
     def _get_text_for_insert(self, preproc_text: str) -> str:
         text = INCLUDE_REGEX.sub("", preproc_text)
+        text = PRAGMA_ONCE_REGEX.sub("", text)
         text = DOUBLE_LINEFEED_REGEX.sub("\n", text)
         return text
 
