@@ -9,7 +9,7 @@ LINEFEED_REGEX = re.compile(r"\n")
 DOUBLE_LINEFEED_REGEX = re.compile(r"\n\n")
 INCLUDE_LINE_REGEX = re.compile(r"^\s*#[ \t]*include[ \t]*<(?P<include>.*)>")
 SYMBOLS_IN_LINE = 80
-SLASH_LINE = "/" * SYMBOLS_IN_LINE
+SLASH_LINE = "//" + ("#" * (SYMBOLS_IN_LINE - 4)) + "//"
 
 
 class SourceParser:

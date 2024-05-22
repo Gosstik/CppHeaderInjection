@@ -4,6 +4,7 @@ from argparse import Namespace
 
 from cpp_header_injection.exceptions import CppHeaderInjectionException
 from cpp_header_injection.logger import dev_log
+from cpp_header_injection.logger import user_log
 from cpp_header_injection.source_parser import SourceParser
 
 from cpp_header_injection.app_conf_funcs import get_conf
@@ -46,6 +47,22 @@ def run_handler(args: Namespace) -> None:
     with open(out_abs_file, "w") as f:
         f.write(out_text)
 
+    # Make lint
+    if args_dict["lint"]:
+        src_dir = os.path.dirname(src_abs_file)
+        cur_dir = os.getcwd()
+        os.chdir(src_dir)
+
+        # clang-tidy
+        user_log("applying clang-tidy")
+        os.system(f"clang-tidy {out_abs_file}")
+
+        # clang-format
+        user_log("applying clang-format")
+        os.system(f"clang-format -i {out_abs_file}")
+
+        os.chdir(cur_dir)
+
 
 def setup_run_parser(parser: ArgumentParser) -> None:
     parser.add_argument(
@@ -53,6 +70,12 @@ def setup_run_parser(parser: ArgumentParser) -> None:
         required=False,
         action="store_true",
         help="save out_file in the same dir as the source_file",
+    )
+    parser.add_argument(
+        "-l", "--lint",
+        required=False,
+        action="store_true",
+        help="apply linters",
     )
     parser.add_argument(
         "source_file",

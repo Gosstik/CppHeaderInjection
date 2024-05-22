@@ -34,7 +34,7 @@ def error_log(message: str, file: TextIO = sys.stderr):
 
 def user_log(message: str, file: TextIO = sys.stdout):
     print(
-        message,
+        f"[HEADER_INJECTION] {message}",
         file=file,
         flush=True,
     )
