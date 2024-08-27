@@ -59,7 +59,7 @@ def run_handler(args: Namespace) -> None:
 
         # clang-format
         user_log("applying clang-format")
-        os.system(f"clang-format -i {out_abs_file}")
+        os.system(f"clang-format -other_i {out_abs_file}")
 
         os.chdir(cur_dir)
 
